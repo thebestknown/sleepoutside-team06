@@ -4,14 +4,30 @@ loadHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  // Check if there are items in the cart
+
   if (cartItems && cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+    document.querySelectorAll(".remove-item").forEach((button) => {
+      button.addEventListener("click", function () {
+        const idToRemove = this.dataset.id;
+        removeFromCart(idToRemove);
+      });
+    });
+
   } else {
     document.querySelector(".product-list").innerHTML =
       "<p>Your cart is empty.</p>";
   }
+}
+
+function removeFromCart(productId) {
+  let cart = getLocalStorage("so-cart") || [];
+  const updatedCart = cart.filter(item => item.Id !== productId);
+  localStorage.setItem("so-cart", JSON.stringify(updatedCart));
+  
+  renderCartContents();
 }
 
 function cartItemTemplate(item) {
@@ -28,6 +44,7 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
+  <button class="remove-item" data-id="${item.Id}">❌</button>
 </li>`;
 
   return newItem;
