@@ -29,6 +29,8 @@ export function getParam(param) {
   return product
 }
 
+
+=======
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
   if (clear) {
     parentElement.innerHTML = "";
@@ -66,4 +68,5 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement)
   renderWithTemplate(footerTemplate, footerElement) 
 }
+
 
