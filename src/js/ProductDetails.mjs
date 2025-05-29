@@ -35,7 +35,7 @@ function productDetailsTemplate(product) {
   productImage.src = product.Images.PrimaryLarge;
   productImage.alt = product.NameWithoutBrand;
 
-  document.querySelector("#product-price").textContent = product.FinalPrice;
+  document.querySelector("#product-price").textContent = `$${product.FinalPrice}`;
   document.querySelector("#product-color").textContent = product.Colors[0].ColorName;
   document.querySelector("#product-description").innerHTML = product.DescriptionHtmlSimple;
 

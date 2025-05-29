@@ -15,7 +15,6 @@ function renderCartContents() {
         removeFromCart(idToRemove);
       });
     });
-
   } else {
     document.querySelector(".product-list").innerHTML =
       "<p>Your cart is empty.</p>";
@@ -26,17 +25,16 @@ function renderCartContents() {
 
 function removeFromCart(productId) {
   let cart = getLocalStorage("so-cart") || [];
-  const updatedCart = cart.filter(item => item.Id !== productId);
+  const updatedCart = cart.filter((item) => item.Id !== productId);
   localStorage.setItem("so-cart", JSON.stringify(updatedCart));
   renderCartContents();
 }
-
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${item.Image}"
+      src="${item.Images.PrimaryMedium}"
       alt="${item.Name}"
     />
   </a>
