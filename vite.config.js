@@ -1,11 +1,10 @@
-import { resolve } from "path";
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
-  root: "src/",
-
+  root: 'src',
   build: {
-    outDir: "../dist",
+    outDir: '../dist',
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
