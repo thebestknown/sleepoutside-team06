@@ -284,6 +284,21 @@ button {
   grid-column: 3;
 }
 
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  margin-top: 1em;
+  background-color: var(--light-grey);
+  border-top: 2px solid var(--primary-color);
+  font-weight: bold;
+}
+
+.cart-footer.hide {
+  display: none;
+}
+
 .remove-item {
   background: none;
   border: none;
