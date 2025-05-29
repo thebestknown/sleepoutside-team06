@@ -1,6 +1,9 @@
-import ProductData from "./ProductData.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
+import Alert from "./alert.js";
 
-const element = document.querySelector(".product-list");
+loadHeaderFooter(); //we were missing this
 
-const productList = new ProductList("Tents", dataSource, element);
+//showing alerts
+const alerts = new Alert();
+alerts.init();
 
