@@ -1,4 +1,22 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, alertMessage } from "./utils.mjs";
+
+function productDetailsTemplate(product) {
+  return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
+    <h2 class="divider">${product.NameWithoutBrand}</h2>
+    <img
+      class="divider"
+      src="${product.Images.PrimaryLarge}"
+      alt="${product.NameWithoutBrand}"
+    />
+    <p class="product-card__price">$${product.FinalPrice}</p>
+    <p class="product__color">${product.Colors[0].ColorName}</p>
+    <p class="product__description">
+    ${product.DescriptionHtmlSimple}
+    </p>
+    <div class="product-detail__add">
+      <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
+    </div></section>`;
+}
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -6,38 +24,29 @@ export default class ProductDetails {
     this.product = {};
     this.dataSource = dataSource;
   }
-
-  
-async init() {  
-  this.product = await this.dataSource.findProductById(this.productId);
-  this.renderProductDetails();
-  document.getElementById('add-to-cart')
-    .addEventListener('click', this.addProductToCart.bind(this));
-}
-
-  addProductToCart() {
-    const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
-    setLocalStorage("so-cart", cartItems);
+  async init() {
+    this.product = await this.dataSource.findProductById(this.productId);
+    this.renderProductDetails("main");
+    document
+      .getElementById("addToCart")
+      .addEventListener("click", this.addToCart.bind(this));
   }
-
-  renderProductDetails() {
-    productDetailsTemplate(this.product);
+  addToCart() {
+    let cartContents = getLocalStorage("so-cart");
+    //check to see if there was anything there
+    if (!cartContents) {
+      cartContents = [];
+    }
+    // then add the current product to the list
+    cartContents.push(this.product);
+    setLocalStorage("so-cart", cartContents);
+    alertMessage(`${this.product.NameWithoutBrand} added to cart!`);
   }
-}
-
-function productDetailsTemplate(product) {
-  document.querySelector("h2").textContent = product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
-  document.querySelector("#product-brand").textContent = product.Brand.Name;
-  document.querySelector("#product-name").textContent = product.NameWithoutBrand;
-
-  const productImage = document.getElementById("product-image");
-  productImage.src = product.Images.PrimaryLarge;
-  productImage.alt = product.NameWithoutBrand;
-
-  document.querySelector("#product-price").textContent = product.FinalPrice;
-  document.querySelector("#product-color").textContent = product.Colors[0].ColorName;
-  document.querySelector("#product-description").innerHTML = product.DescriptionHtmlSimple;
-
-  document.querySelector("#add-to-cart").dataset.id = product.Id;
+  renderProductDetails(selector) {
+    const element = document.querySelector(selector);
+    element.insertAdjacentHTML(
+      "afterBegin",
+      productDetailsTemplate(this.product)
+    );
+  }
 }
