@@ -6,4 +6,3 @@ loadHeaderFooter(); //we were missing this
 //showing alerts
 const alerts = new Alert();
 alerts.init();
-
