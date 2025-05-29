@@ -29,8 +29,6 @@ export function getParam(param) {
   return product
 }
 
-
-=======
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
   if (clear) {
     parentElement.innerHTML = "";
