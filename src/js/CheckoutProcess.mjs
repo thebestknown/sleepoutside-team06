@@ -93,10 +93,16 @@ export default class CheckoutProcess {
     //console.log(order);
 
     try {
+      // Attempt to submit the order through the external service
       const response = await services.checkout(order);
-      console.log(response);
+      console.log("Order submitted successfully:", response);
+
+      localStorage.removeItem(this.key);
+
+      window.location.href = "./success.html";
     } catch (err) {
-      console.log(err);
+       // Handle any errors that occur during checkout
+      console.log("Error during checkout:", err);
     }
   }
 }

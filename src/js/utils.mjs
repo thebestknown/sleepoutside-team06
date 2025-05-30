@@ -65,4 +65,3 @@ export async function loadHeaderFooter() {
   renderWithTemplate(footerTemplate, footerElement) 
 }
 
-
